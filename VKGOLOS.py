@@ -12,6 +12,7 @@ class ExampleApp(QtWidgets.QMainWindow, GUI.Ui_MainWindow):
         self.setupUi(self)  # Это нужно для инициализации нашего дизайна
         self.Join.clicked.connect(self.Vhod)
         self.request_2.clicked.connect(self.Send_GL)
+        self.request.clicked.connect(self.Send_GL_for_user)
         lst = os.listdir(path=".")
         for i in range(len(lst)):
             self.list.addItem(lst[i])
@@ -34,6 +35,41 @@ class ExampleApp(QtWidgets.QMainWindow, GUI.Ui_MainWindow):
         send = send.text
         send = json.loads(send)
         print(send)
+
+    def Send_GL_for_user(self):
+        chat = self.person_id.text()
+        s = self.list.currentText()
+        url = requests.get("https://api.vk.com/method/docs.getUploadServer?access_token={}&type=audio_message&v=5.63".format(token))
+        url = url.text
+        url = json.loads(url)
+        url = url["response"]["upload_url"]
+        symbols = (u"абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+           u"abvgdeejzijklmnoprstufhzcss_y_euaABVGDEEJZIJKLMNOPRSTUFHZCSS_Y_EUA")
+        tr = {ord(a):ord(b) for a, b in zip(*symbols)}
+        print (s.translate(tr))
+        s_new = s.translate(tr)
+        self.console.addItem(s_new)
+        file_ = {'file': (s_new, open(s, 'rb'))}
+        r = requests.post(url, files=file_)
+        a = r.text
+        b = json.loads(a)
+        print(b)
+        c = b["file"]
+        r = requests.get('https://api.vk.com/method/docs.save?access_token={0}&file={1}&title=test&tags=test_tags&v=5.92'.format(token, c))
+        b = r.text
+        datates = json.loads(b)
+        print(datates)
+        ids = datates["response"]["audio_message"]["id"]
+        owner_ids = datates["response"]["audio_message"]["owner_id"]
+        print(ids)
+        print(owner_ids)
+        audio = 'doc{0}_{1}'.format(owner_ids, ids)
+        print(audio)
+        send = requests.get("https://api.vk.com/method/messages.send?access_token={0}&user_id={1}&attachment={2}".format(token, chat, audio))
+        send = send.text
+        send = json.loads(send)
+        print(send)
+    
     def Send_GL(self):
         chat = self.peer_id.text()
         s = self.list.currentText()
