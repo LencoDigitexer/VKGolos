@@ -4,5 +4,5 @@
     $ python3 VKGOLOS.py
     
 <p align="center">
-  <img src="" alt="Sublime's custom image"/>
+  <img src="src/screen.png" alt="Sublime's custom image"/>
 </p>
