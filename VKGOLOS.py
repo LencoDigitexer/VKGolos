@@ -3,6 +3,7 @@ from PyQt5 import QtWidgets
 import GUI # Это наш конвертированный файл дизайна
 import os
 import requests
+import random
 import json
 class ExampleApp(QtWidgets.QMainWindow, GUI.Ui_MainWindow):
     def __init__(self):
@@ -39,7 +40,7 @@ class ExampleApp(QtWidgets.QMainWindow, GUI.Ui_MainWindow):
     def Send_GL_for_user(self):
         chat = self.person_id.text()
         s = self.list.currentText()
-        url = requests.get("https://api.vk.com/method/docs.getUploadServer?access_token={}&type=audio_message&v=5.63".format(token))
+        url = requests.get("https://api.vk.com/method/docs.getUploadServer?access_token={}&type=audio_message&v=5.103".format(token))
         url = url.text
         url = json.loads(url)
         url = url["response"]["upload_url"]
@@ -55,7 +56,7 @@ class ExampleApp(QtWidgets.QMainWindow, GUI.Ui_MainWindow):
         b = json.loads(a)
         print(b)
         c = b["file"]
-        r = requests.get('https://api.vk.com/method/docs.save?access_token={0}&file={1}&title=test&tags=test_tags&v=5.92'.format(token, c))
+        r = requests.get('https://api.vk.com/method/docs.save?access_token={0}&file={1}&title=test&tags=test_tags&v=5.103'.format(token, c))
         b = r.text
         datates = json.loads(b)
         print(datates)
@@ -65,7 +66,8 @@ class ExampleApp(QtWidgets.QMainWindow, GUI.Ui_MainWindow):
         print(owner_ids)
         audio = 'doc{0}_{1}'.format(owner_ids, ids)
         print(audio)
-        send = requests.get("https://api.vk.com/method/messages.send?access_token={0}&user_id={1}&attachment={2}".format(token, chat, audio))
+        randomid = 123456 + random.randint(1,27)
+        send = requests.get("https://api.vk.com/method/messages.send?access_token={0}&user_id={1}&attachment={2}&random_id={3}&v=5.103".format(token, chat, audio, randomid))
         send = send.text
         send = json.loads(send)
         print(send)
@@ -73,7 +75,7 @@ class ExampleApp(QtWidgets.QMainWindow, GUI.Ui_MainWindow):
     def Send_GL(self):
         chat = self.peer_id.text()
         s = self.list.currentText()
-        url = requests.get("https://api.vk.com/method/docs.getUploadServer?access_token={}&type=audio_message&v=5.63".format(token))
+        url = requests.get("https://api.vk.com/method/docs.getUploadServer?access_token={}&type=audio_message&v=5.103".format(token))
         url = url.text
         url = json.loads(url)
         url = url["response"]["upload_url"]
@@ -89,7 +91,7 @@ class ExampleApp(QtWidgets.QMainWindow, GUI.Ui_MainWindow):
         b = json.loads(a)
         print(b)
         c = b["file"]
-        r = requests.get('https://api.vk.com/method/docs.save?access_token={0}&file={1}&title=test&tags=test_tags&v=5.92'.format(token, c))
+        r = requests.get('https://api.vk.com/method/docs.save?access_token={0}&file={1}&title=test&tags=test_tags&v=5.103'.format(token, c))
         b = r.text
         datates = json.loads(b)
         print(datates)
@@ -99,7 +101,8 @@ class ExampleApp(QtWidgets.QMainWindow, GUI.Ui_MainWindow):
         print(owner_ids)
         audio = 'doc{0}_{1}'.format(owner_ids, ids)
         print(audio)
-        send = requests.get("https://api.vk.com/method/messages.send?access_token={0}&chat_id={1}&attachment={2}".format(token, chat, audio))
+        randomid = 123456 + random.randint(1,27)
+        send = requests.get("https://api.vk.com/method/messages.send?access_token={0}&chat_id={1}&attachment={2}&random_id={3}&v=5.103".format(token, chat, audio, randomid))
         send = send.text
         send = json.loads(send)
         print(send)
