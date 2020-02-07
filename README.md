@@ -28,3 +28,23 @@
 <p align="center">
   <img src="src/profit.png" alt="Sublime's custom image"/>
 </p>
+
+# Как узнать id беседы
+
+Заходим в беседу
+
+<p align="center">
+  <img src="src/Screenshot_1.png" alt="Sublime's custom image"/>
+</p>
+
+Смотрим на строку адреса в браузере (в Яндекс Браузере на нее нужно нажать, чтобы увидеть полный адрес)
+
+<p align="center">
+  <img src="src/Screenshot_2.png" alt="Sublime's custom image"/>
+</p>
+
+Видим адрес 
+>    vk.com/im?sel=c8
+    
+После <b>sel=c</b> идет число - это число является id беседы.
+Вставляем в соответствующее поле программы
